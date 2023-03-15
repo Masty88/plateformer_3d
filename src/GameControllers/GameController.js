@@ -4,7 +4,8 @@ import EnvironmentController from "./EnvironnmentController";
 import "@babylonjs/core/Debug/debugLayer"; // Augments the scene with the debug methods
 import "@babylonjs/inspector";
 import PlayerCreator from "./PlayerCreator";
-import PlayerController from "./PlayerController"; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
+import PlayerController from "./PlayerController";
+import InputController from "./InputController"; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
 
 class GameController{
     constructor(scene,engine) {
@@ -31,10 +32,14 @@ class GameController{
         //Create Player
         const player = new PlayerCreator();
 
-        // Create Player controller
-        const playerController = new PlayerController(player)
+        //Input Controller
+        const input= new InputController();
 
-        // await scene.debugLayer.show();
+        // Create Player controller
+        const playerController = new PlayerController(player,input)
+        playerController.activatePlayerCamera();
+
+        await scene.debugLayer.show();
 
         GameObject.Engine.hideLoadingUI()
 

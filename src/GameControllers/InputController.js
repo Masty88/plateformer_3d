@@ -8,9 +8,10 @@ class InputController extends GameObject{
         this.inputMap = {};
 
         //Register the action
-        this.scene.actionManager(ActionManager.OnKeyDownTrigger,(event)=>{
-            this.inputMap[event.sourceEvent.key] = event.sourceEvent.type == "keydown"
-        })
+        this.scene.actionManager.registerAction(
+            new ExecuteCodeAction(ActionManager.OnKeyDownTrigger,(event)=>{
+                this.inputMap[event.sourceEvent.key]= event.sourceEvent.type == "keydown";
+            }));
         this.scene.actionManager.registerAction(
             new ExecuteCodeAction(ActionManager.OnKeyUpTrigger,(event)=>{
                 this.inputMap[event.sourceEvent.key]=event.sourceEvent.type == "keydown";
@@ -52,3 +53,5 @@ class InputController extends GameObject{
         }
     }
 }
+
+export default InputController;
