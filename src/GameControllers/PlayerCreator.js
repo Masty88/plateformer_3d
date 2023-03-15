@@ -13,9 +13,9 @@ class PlayerCreator extends GameObject{
         this.body.position = new Vector3(0,10,0);
         this.body.checkCollisions = true;
         this.body.isPickable = false;
-        this.body.bakeTransformIntoVertices(Matrix.Translation(0, 1, 0))
+        this.body.bakeTransformIntoVertices(Matrix.Translation(0, 1.2, 0))
         //for collisions
-        this.body.ellipsoid = new Vector3(1, 0.8, 1);
+        this.body.ellipsoid = new Vector3(1, 1, 1);
         this.body.ellipsoidOffset = new Vector3(0, 1, 0);
         // this.body.rotation.y = Math.PI / 2;
 

@@ -20,6 +20,8 @@ class GameController{
 
         GameObject.Engine.displayLoadingUI()
 
+        scene.collisionsEnabled = true;
+
         this.mainLight = new HemisphericLight("light", Vector3.Up(), scene);
         this.mainLight.intensity = 0.2
 
