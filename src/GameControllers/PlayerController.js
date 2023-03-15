@@ -2,11 +2,11 @@ import GameObject from "./GameObject";
 import {Color3, FollowCamera, Quaternion, Ray, RayHelper, Vector3} from "@babylonjs/core";
 
 class PlayerController extends GameObject{
-    static PLAYER_SPEED= 0.2;
-    static JUMP_FORCE = 0.8;
+    static PLAYER_SPEED= 0.1;
+    static JUMP_FORCE = 0.6;
 
     //Gravity
-    static GRAVITY = -2.8
+    static GRAVITY = -1.8
     gravity = new Vector3();
     lastGroundPos = Vector3.Zero(); // keep track of the last grounded position
 

@@ -12,6 +12,7 @@ class PlayerCreator extends GameObject{
         this.body.position = new Vector3(0,20,0);
         this.body.checkCollisions = true;
         this.body.isPickable = false;
+        this.body.rotation.y = Math.PI / 2;
 
         //Character Parent
         this.character = new TransformNode("character_parent");

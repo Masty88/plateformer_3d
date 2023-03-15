@@ -1,11 +1,12 @@
 import GameObject from "./GameObject";
 import {FreeCamera, HemisphericLight, Vector3} from "@babylonjs/core";
-import EnvironmentController from "./EnvironnmentController";
+import EnvironmentController from "./EnvironementController";
 import "@babylonjs/core/Debug/debugLayer"; // Augments the scene with the debug methods
 import "@babylonjs/inspector";
 import PlayerCreator from "./PlayerCreator";
 import PlayerController from "./PlayerController";
-import InputController from "./InputController"; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
+import InputController from "./InputController";
+import EnvironementController from "./EnvironementController"; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
 
 class GameController{
     constructor(scene,engine) {
@@ -27,7 +28,7 @@ class GameController{
         camera.attachControl(true)
 
         //Create environnment
-        const environementController = new EnvironmentController();
+        const environementController = new EnvironementController();
 
         //Create Player
         const player = new PlayerCreator();
