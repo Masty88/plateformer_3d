@@ -10,11 +10,16 @@ class PlayerController extends GameObject{
     gravity = new Vector3();
     lastGroundPos = Vector3.Zero(); // keep track of the last grounded position
 
-    constructor(player,input) {
+    constructor(player,input, lastPlatform) {
         super();
         this.player = player;
         this.input = input;
+        this.lastPlatform = lastPlatform;
+        this.lastPlatform.metadata = {
+            lastPosition : this.lastPlatform.position.clone()
+        }
         this.setupPlayerCamera();
+        console.log(this.lastPlatform)
     }
 
     updateFromControl(){
@@ -53,7 +58,7 @@ class PlayerController extends GameObject{
     }
 
     floorRayCast(offsetx, offsetz, raycastlen){
-        let raycastFloorPos = new Vector3(this.player.body.position.x + offsetx, this.player.body.position.y - 0.83 , this.player.body.position.z + offsetz);
+        let raycastFloorPos = new Vector3(this.player.body.position.x + offsetx, this.player.body.position.y  , this.player.body.position.z + offsetz);
         this.ray = new Ray(raycastFloorPos, Vector3.Up().scale(-1), raycastlen);
         // this.helper = RayHelper.CreateAndShow(this.ray, this.scene, new Color3(1, 1, 0.1));
         let predicate = function (mesh) {
@@ -96,14 +101,28 @@ class PlayerController extends GameObject{
         //  this.player.body.moveWithCollisions(this.player.body.frontVector.addInPlace(this.gravity));
 
         if (this.isGrounded()) {
-            console.log("ground")
             this.gravity.y = 0;
+            console.log("ground")
             // this.lastGroundPos.copyFrom(this.player.body.position);
             this.grounded = true;
             this.jumpCount = 1;
             this.isJumping=false
             this.isFalling= false;
+
+            if (this.player.body.intersectsMesh(this.lastPlatform, true)) {
+                // const platformHeight = this.lastPlatform.getBoundingInfo().boundingBox.maximum.y;
+                // const playerHeight = this.player.body.scaling.y;
+                // const heightOffset = platformHeight + (playerHeight / 2);
+                // this.player.body.position.y = heightOffset;
+                // console.log("here")
+                console.log(this.lastPlatform.metadata.lastPosition)
+                const vel = this.lastPlatform.position.subtract(this.lastPlatform.metadata.lastPosition)
+                console.log(vel)
+                this.player.body.position.addInPlace(vel)
+            }
+            this.lastPlatform.metadata.lastPosition = this.lastPlatform.position.clone()
         }
+
 
         //Jump detection
         if(this.input.jumpKeyDown && this.jumpCount > 0 ) {

@@ -37,7 +37,7 @@ class GameController{
         const input= new InputController();
 
         // Create Player controller
-        const playerController = new PlayerController(player,input)
+        const playerController = new PlayerController(player,input,environementController.lastPlatform)
         playerController.activatePlayerCamera();
 
         await scene.debugLayer.show();
