@@ -1,5 +1,5 @@
 import GameObject from "./GameObject";
-import {Color3, FollowCamera, Quaternion, Ray, RayHelper, Vector3} from "@babylonjs/core";
+import {ActionManager, Color3, FollowCamera, Quaternion, Ray, RayHelper, Vector3} from "@babylonjs/core";
 
 class PlayerController extends GameObject{
     static PLAYER_SPEED= 0.1;
@@ -19,7 +19,7 @@ class PlayerController extends GameObject{
             lastPosition : this.lastPlatform.position.clone()
         }
         this.setupPlayerCamera();
-        console.log(this.lastPlatform)
+        this.managePoint();
     }
 
     updateFromControl(){
@@ -133,6 +133,10 @@ class PlayerController extends GameObject{
             this.isFalling= false;
             this.player.body.position.y += PlayerController.JUMP_FORCE;
         }
+    }
+
+    managePoint(){
+        this.player.body.actionManager = new ActionManager(this.scene);
     }
 
     beforeRenderUpdate(){

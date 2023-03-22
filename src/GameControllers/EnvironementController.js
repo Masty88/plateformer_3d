@@ -1,5 +1,14 @@
 import GameObject from "./GameObject";
-import {Animation,AnimationGroup, Color3, MeshBuilder, StandardMaterial, Vector3} from "@babylonjs/core";
+import {
+    ActionManager,
+    Animation,
+    AnimationGroup,
+    Color3,
+    ExecuteCodeAction,
+    MeshBuilder,
+    StandardMaterial,
+    Vector3
+} from "@babylonjs/core";
 import Point from "./Point";
 
 class EnvironementController extends GameObject{
@@ -104,6 +113,25 @@ class EnvironementController extends GameObject{
                 }
             }
         }
+    }
+
+    checkPoint(player){
+        player.pointFind = 0;
+        console.log(player.player)
+        this.points.forEach((point)=>{
+            player.player.body.actionManager.registerAction(
+                new ExecuteCodeAction(
+                    {
+                        trigger: ActionManager.OnIntersectionEnterTrigger,
+                        parameter: point.point
+                    },
+                    ()=>{
+                        player.pointFind +=1;
+                        point.point.dispose();
+            }
+                )
+            )
+        })
     }
 
 
