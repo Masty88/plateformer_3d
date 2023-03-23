@@ -110,15 +110,9 @@ class PlayerController extends GameObject{
             this.isFalling= false;
 
             if (this.player.body.intersectsMesh(this.lastPlatform, true)) {
-                // const platformHeight = this.lastPlatform.getBoundingInfo().boundingBox.maximum.y;
-                // const playerHeight = this.player.body.scaling.y;
-                // const heightOffset = platformHeight + (playerHeight / 2);
-                // this.player.body.position.y = heightOffset;
-                // console.log("here")
-                console.log(this.lastPlatform.metadata.lastPosition)
                 const vel = this.lastPlatform.position.subtract(this.lastPlatform.metadata.lastPosition)
-                console.log(vel)
                 this.player.body.position.addInPlace(vel)
+                this.win = true
             }
             this.lastPlatform.metadata.lastPosition = this.lastPlatform.position.clone()
         }
@@ -149,6 +143,14 @@ class PlayerController extends GameObject{
             this.beforeRenderUpdate();
         }
         return this.camera;
+    }
+
+    reset(initialPlatform){
+        this.player.body.position = initialPlatform.position.clone().add(new Vector3(0, 2, 0));
+        this.player.body.rotationQuaternion = new Quaternion();
+        // Reset any other properties you need to, like pointFind and win
+        this.pointFind = 0;
+        this.win = false;
     }
 
     setupPlayerCamera(){

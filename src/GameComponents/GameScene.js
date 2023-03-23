@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import SceneComponent from "./SceneComponent";
 import GameController from "../GameControllers/GameController";
 
 const GameScene = (props) => {
-    const [count, setCount] = useState(1)
-    const onSceneReady = async (scene, engine) => {
-        let game = new GameController(scene, engine,count,setCount)
+
+
+    const onSceneReady = async (scene, engine, resetGame) => {
+    const game = new GameController(scene, engine, resetGame);
     }
 
     return (

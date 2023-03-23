@@ -45,7 +45,7 @@ class EnvironementController extends GameObject{
         // Generate additional platforms
         let previousPlatform = startPlatform;
         console.log(previousPlatform)
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 1; i++) {
             const reachableDistance = EnvironementController.MAX_JUMP_DISTANCE
             const yOffset = Math.floor(Math.random() * (EnvironementController.PLATFORM_Y_RANGE.max - EnvironementController.PLATFORM_Y_RANGE.min + 1)) + EnvironementController.PLATFORM_Y_RANGE.min;
             const position = this.getRandomPositionWithinRange(previousPlatform.position, reachableDistance, yOffset);
@@ -89,6 +89,7 @@ class EnvironementController extends GameObject{
             const zRange = dimensions.z / 2;
             const z = platform.position.z + Math.random() * zRange - zRange / 2;
             const point = new Point(new Vector3(x, y, z), i);
+            point.isTake = false
             this.points.push(point);
         }
     }
@@ -119,18 +120,23 @@ class EnvironementController extends GameObject{
         player.pointFind = 0;
         console.log(player.player)
         this.points.forEach((point)=>{
-            player.player.body.actionManager.registerAction(
-                new ExecuteCodeAction(
-                    {
-                        trigger: ActionManager.OnIntersectionEnterTrigger,
-                        parameter: point.point
-                    },
-                    ()=>{
-                        player.pointFind +=1;
-                        point.point.dispose();
-            }
+                player.player.body.actionManager.registerAction(
+                    new ExecuteCodeAction(
+                        {
+                            trigger: ActionManager.OnIntersectionEnterTrigger,
+                            parameter: point.point
+                        },
+                        ()=>{
+                            console.log(point)
+                            if(point.isTake == false){
+                                player.pointFind +=1;
+                            }
+                            point.isTake = true;
+                            point.point.dispose();
+
+                        }
+                    )
                 )
-            )
         })
     }
 

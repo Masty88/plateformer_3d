@@ -1,19 +1,22 @@
 import GameObject from "./GameObject";
-import {FreeCamera, HemisphericLight, Vector3} from "@babylonjs/core";
+import {FreeCamera, HemisphericLight, Scene, Vector3} from "@babylonjs/core";
 import EnvironmentController from "./EnvironementController";
 import "@babylonjs/core/Debug/debugLayer"; // Augments the scene with the debug methods
 import "@babylonjs/inspector";
 import PlayerCreator from "./PlayerCreator";
 import PlayerController from "./PlayerController";
 import InputController from "./InputController";
-import EnvironementController from "./EnvironementController"; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
+import EnvironementController from "./EnvironementController";
+import GuiController from "./GuiController"; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
+
 
 class GameController{
-    constructor(scene,engine) {
+    constructor(scene,engine,resetGame) {
         GameObject.GameController = this;
         GameObject.Scene = scene;
         GameObject.Engine= engine;
-        this.setUpGame(scene);
+        this.resetGame= resetGame;
+        this.setUpGame(scene,engine);
     }
 
     async setUpGame(scene,engine){
@@ -28,6 +31,7 @@ class GameController{
         const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene);
         camera.setTarget(Vector3.Zero());
         camera.attachControl(true)
+        console.log("here")
 
         //Create environnment
         const environementController = new EnvironementController();
@@ -43,11 +47,26 @@ class GameController{
         playerController.activatePlayerCamera();
         environementController.checkPoint(playerController)
 
+        //Gui Controller
+        const guiController = new GuiController(environementController.platforms.length - 1);
+
+        scene.onBeforeRenderObservable.add(() => {
+            guiController.updatePointCount(playerController.pointFind)
+            if(playerController.pointFind === environementController.platforms.length - 1  && playerController.win){
+                guiController.showWin();
+            }
+            if(playerController.player.body.position.y <= -1){
+                this.resetGame()
+            }
+        })
+
         await scene.debugLayer.show();
 
         GameObject.Engine.hideLoadingUI()
 
     }
+
+
 }
 
 export default GameController
