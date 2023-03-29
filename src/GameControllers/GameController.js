@@ -7,7 +7,8 @@ import PlayerCreator from "./PlayerCreator";
 import PlayerController from "./PlayerController";
 import InputController from "./InputController";
 import EnvironementController from "./EnvironementController";
-import GuiController from "./GuiController"; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
+import GuiController from "./GuiController";
+import MaterialController from "./MaterialController"; // Injects a local ES6 version of the inspector to prevent automatically relying on the none compatible version
 
 
 class GameController{
@@ -51,6 +52,9 @@ class GameController{
         //Gui Controller
         const guiController = new GuiController(environementController.platforms.length - 1);
 
+        //Material Controller
+        const materialController = new MaterialController();
+
         scene.onBeforeRenderObservable.add(() => {
             guiController.updatePointCount(playerController.pointFind)
             if(playerController.pointFind === environementController.platforms.length - 1  && playerController.win){
@@ -65,7 +69,7 @@ class GameController{
             }
         })
 
-        //await scene.debugLayer.show();
+        // await scene.debugLayer.show();
 
         GameObject.Engine.hideLoadingUI()
 

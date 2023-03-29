@@ -13,7 +13,7 @@ class PlayerCreator extends GameObject{
         this.body.position = new Vector3(0,10,0);
         this.body.checkCollisions = true;
         this.body.isPickable = false;
-        this.body.bakeTransformIntoVertices(Matrix.Translation(0, 1, 0))
+        this.body.bakeTransformIntoVertices(Matrix.Translation(0, .98, 0))
         //for collisions
         this.body.ellipsoid = new Vector3(0.5, 1, 0.5);
         this.body.ellipsoidOffset = new Vector3(0, 1, 0);
