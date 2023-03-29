@@ -11,11 +11,13 @@ import GuiController from "./GuiController"; // Injects a local ES6 version of t
 
 
 class GameController{
-    constructor(scene,engine,resetGame) {
+    constructor(scene,engine,resetGame, changeLevel, level) {
         GameObject.GameController = this;
         GameObject.Scene = scene;
         GameObject.Engine= engine;
+        GameObject.Level = level
         this.resetGame= resetGame;
+        this.changeLevel = changeLevel
         this.setUpGame(scene,engine);
     }
 
@@ -31,7 +33,6 @@ class GameController{
         const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene);
         camera.setTarget(Vector3.Zero());
         camera.attachControl(true)
-        console.log("here")
 
         //Create environnment
         const environementController = new EnvironementController();
@@ -54,13 +55,17 @@ class GameController{
             guiController.updatePointCount(playerController.pointFind)
             if(playerController.pointFind === environementController.platforms.length - 1  && playerController.win){
                 guiController.showWin();
+                setTimeout(()=>{
+                    this.changeLevel()
+                },1000)
+
             }
             if(playerController.player.body.position.y <= -1){
                 this.resetGame()
             }
         })
 
-        await scene.debugLayer.show();
+        //await scene.debugLayer.show();
 
         GameObject.Engine.hideLoadingUI()
 

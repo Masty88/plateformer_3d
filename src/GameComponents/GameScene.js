@@ -5,8 +5,8 @@ import GameController from "../GameControllers/GameController";
 const GameScene = (props) => {
 
 
-    const onSceneReady = async (scene, engine, resetGame) => {
-    const game = new GameController(scene, engine, resetGame);
+    const onSceneReady = async (scene, engine, resetGame,changeLevel,level) => {
+    const game = new GameController(scene, engine, resetGame, changeLevel,level);
     }
 
     return (

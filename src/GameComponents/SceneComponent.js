@@ -14,9 +14,9 @@ export default ({ antialias, engineOptions, adaptToDeviceRatio, sceneOptions, on
         const engine = new Engine(canvas, antialias, engineOptions, adaptToDeviceRatio);
         const scene = new Scene(engine, sceneOptions);
         if (scene.isReady()) {
-            onSceneReady(scene,engine, resetGame);
+            onSceneReady(scene,engine, resetGame, changeLevel,level);
         } else {
-            scene.onReadyObservable.addOnce((scene) => onSceneReady(scene,engine,resetGame));
+            scene.onReadyObservable.addOnce((scene) => onSceneReady(scene,engine,resetGame,changeLevel,level));
         }
 
         engine.runRenderLoop(() => {
@@ -39,7 +39,7 @@ export default ({ antialias, engineOptions, adaptToDeviceRatio, sceneOptions, on
                 window.removeEventListener("resize", resize);
             }
         };
-    }, [antialias, engineOptions, adaptToDeviceRatio, sceneOptions, onRender, onSceneReady,play]);
+    }, [antialias, engineOptions, adaptToDeviceRatio, sceneOptions, onRender, onSceneReady,play, level]);
 
     const resetGame = () => {
         setPlay((play) => !play);

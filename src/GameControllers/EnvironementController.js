@@ -45,7 +45,7 @@ class EnvironementController extends GameObject{
         // Generate additional platforms
         let previousPlatform = startPlatform;
         console.log(previousPlatform)
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < this.level; i++) {
             const reachableDistance = EnvironementController.MAX_JUMP_DISTANCE
             const yOffset = Math.floor(Math.random() * (EnvironementController.PLATFORM_Y_RANGE.max - EnvironementController.PLATFORM_Y_RANGE.min + 1)) + EnvironementController.PLATFORM_Y_RANGE.min;
             const position = this.getRandomPositionWithinRange(previousPlatform.position, reachableDistance, yOffset);

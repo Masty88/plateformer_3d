@@ -2,11 +2,13 @@ class GameObject{
     static GameController;
     static Scene;
     static Engine;
+    static Level;
 
     constructor() {
         this.gameController = GameObject.GameController;
         this.scene = GameObject.Scene;
         this.engine= GameObject.Engine;
+        this.level = GameObject.Level
 
         const beforeLoop = () => this.beforeLoop();
         this.scene.registerBeforeRender(beforeLoop);

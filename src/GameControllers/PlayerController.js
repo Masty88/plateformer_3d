@@ -3,7 +3,7 @@ import {ActionManager, Color3, FollowCamera, Quaternion, Ray, RayHelper, Vector3
 
 class PlayerController extends GameObject{
     static PLAYER_SPEED= 0.1;
-    static JUMP_FORCE = 0.6;
+    static JUMP_FORCE = 0.7;
 
     //Gravity
     static GRAVITY = -1.8
