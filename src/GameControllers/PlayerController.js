@@ -100,7 +100,7 @@ class PlayerController extends GameObject{
         // this.player.body.moveWithCollisions(this.player.body.position.addInPlace(this.gravity).subtractInPlace(Vector3.Up().scale(PlayerController.PLAYER_SPEED * this.deltaTime)));
         //  this.player.body.moveWithCollisions(this.player.body.frontVector.addInPlace(this.gravity));
 
-        if (this.isGrounded()) {
+        /* if (this.isGrounded()) {
             this.gravity.y = 0;
             console.log("ground")
             // this.lastGroundPos.copyFrom(this.player.body.position);
@@ -114,6 +114,23 @@ class PlayerController extends GameObject{
                 this.player.body.position.addInPlace(vel)
                 this.win = true
             }
+            this.lastPlatform.metadata.lastPosition = this.lastPlatform.position.clone()
+        } */
+
+        if (this.isGrounded()) {
+            this.gravity.y = 0;
+            console.log("ground")
+            this.grounded = true;
+            this.jumpCount = 1;
+            this.isJumping = false;
+            this.isFalling = false;
+
+            // Controlla se il player interseca la piattaforma
+            if (this.player.body.intersectsMesh(this.lastPlatform, true)) {
+                // Sposta il player leggermente verso l'alto
+                this.player.body.position.y += 0.1; // Regola il valore in base alle tue esigenze
+            }
+
             this.lastPlatform.metadata.lastPosition = this.lastPlatform.position.clone()
         }
 
